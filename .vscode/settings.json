@@ -1,4 +1,7 @@
 {
     "python.pythonPath": "C:\\Python39\\python.exe",
-    "python.formatting.provider": "black"
+    "python.formatting.provider": "black",
+    "python.linting.pylintEnabled": false,
+    "python.linting.enabled": true,
+    "python.linting.banditEnabled": true
 }
