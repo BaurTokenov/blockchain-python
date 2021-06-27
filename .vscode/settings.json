@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "C:\\Python39\\python.exe",
+    "python.pythonPath": "blockchain-env/bin/python",
     "python.formatting.provider": "black",
     "python.linting.pylintEnabled": false,
     "python.linting.enabled": true,
