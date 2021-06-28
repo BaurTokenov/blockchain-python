@@ -7,11 +7,10 @@ def crypto_hash(*args):
     Return a sha-256 hash of the given arguments.
     """
 
-    str_args = sorted([json.dumps(arg) for arg in args])
+    str_args = [json.dumps(arg) for arg in args]
 
-    joined_data = "".join(str_args)
+    joined_data = "^".join(str_args)
 
-    print(f"joined_data: {joined_data}")
     return hashlib.sha256(joined_data.encode("utf-8")).hexdigest()
 
 
