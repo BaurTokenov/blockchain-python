@@ -96,3 +96,10 @@ def test_is_valid_block_jumped_difficulty(last_block, block):
 
     with pytest.raises(Exception, match="The difficulty was adjusted by more than 1"):
         Block.is_valid_block(last_block, block)
+
+
+def test_is_valid_block_bad_hash(last_block, block):
+    block.hash = block.difficulty * "0" + "bababbcbcd"
+
+    with pytest.raises(Exception, match="The block hash must be correct"):
+        Block.is_valid_block(last_block, block)
