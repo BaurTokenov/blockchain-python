@@ -1,4 +1,4 @@
-from backend.blockchain.block import Block
+from backend.blockchain.block import Block, GENESIS_DATA
 
 
 class Blockchain:
@@ -18,10 +18,43 @@ class Blockchain:
     def __repr__(self):
         return f"Blockchain: {self.chain} "
 
+    def replace_chain(self, chain):
+        """
+        Replace the local chain with the incoming one if the following applies:
+        - The incoming chain is longer than the local one.
+        - The incoming chain is formatted properly
+        """
+        if len(chain) <= len(self.chain):
+            raise Exception("Cannot replace. The incoming chain must be longer")
+
+        try:
+            Blockchain.is_valid_chain(chain)
+        except Exception as e:
+            raise Exception(f"Cannot replace. The incoming chain is invalid")
+
+        self.chain = chain
+
     def print(self):
         for block in self.chain:
             print(block.data)
         print()
+
+    @staticmethod
+    def is_valid_chain(chain):
+        """
+        Validate incoming chain.
+        Enforce the following rules of the blockchain:
+        - the chain must start with a genesis block
+        - the blocks must be formatted correctly
+        """
+        first_block = chain[0]
+        if first_block != Block.genesis():
+            raise Exception("The first block is not the genesis block")
+
+        for i in range(1, len(chain)):
+            last_block = chain[i - 1]
+            block = chain[i]
+            Block.is_valid_block(last_block, block)
 
 
 def main():
@@ -30,6 +63,9 @@ def main():
     blockchain.add_block("two")
     blockchain.add_block("three")
     blockchain.print()
+    blockchain.chain[0] = blockchain.chain[-1]
+    blockchain.chain[-1].last_hash = "adbfefabdf"
+    Blockchain.is_valid_chain(blockchain.chain)
     print(blockchain)
 
     print(f"blockchain.py __name__: {__name__}")
