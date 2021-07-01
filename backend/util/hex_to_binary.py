@@ -10,8 +10,6 @@ for i in range(16):
 
     HEX_TO_BINARY_TABLE[hex_digit] = binary_digit
 
-print(HEX_TO_BINARY_TABLE)
-
 
 def hex_to_binary(hex_string):
     binary_string = ""

@@ -122,6 +122,12 @@ class Block:
     def __eq__(self, value):
         return self.__dict__ == value.__dict__
 
+    def to_json(self):
+        """
+        Serializes the block into a json dictionary
+        """
+        return self.__dict__
+
 
 def main():
     genesis_block = Block.genesis()

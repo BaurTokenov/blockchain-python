@@ -39,6 +39,12 @@ class Blockchain:
             print(block.data)
         print()
 
+    def to_json(self):
+        """
+        Serialize the blockchain into a list of blocks.
+        """
+        return [block.to_json() for block in self.chain]
+
     @staticmethod
     def is_valid_chain(chain):
         """
