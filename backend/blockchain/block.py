@@ -51,13 +51,11 @@ class Block:
         nonce = 0
 
         hash = crypto_hash(timestamp, last_hash, data, difficulty, nonce)
-        print("Mining...")
         while hex_to_binary(hash)[0:difficulty] != "0" * difficulty:
             nonce += 1
             timestamp = time.time_ns()
             difficulty = Block.adjust_difficulty(last_block, new_timestamp=timestamp)
             hash = crypto_hash(timestamp, last_hash, data, difficulty, nonce)
-        print("found hash", hash)
 
         return Block(timestamp, last_hash, hash, data, difficulty, nonce)
 
@@ -127,6 +125,13 @@ class Block:
         Serializes the block into a json dictionary
         """
         return self.__dict__
+
+    @staticmethod
+    def from_json(block_json):
+        """
+        Deserialize a block's json representation back into a block instance.
+        """
+        return Block(**block_json)
 
 
 def main():
