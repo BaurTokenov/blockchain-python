@@ -30,7 +30,7 @@ class Blockchain:
         try:
             Blockchain.is_valid_chain(chain)
         except Exception as e:
-            raise Exception(f"Cannot replace. The incoming chain is invalid")
+            raise Exception(f"Cannot replace. The incoming chain is invalid: {e}")
 
         self.chain = chain
 
@@ -38,6 +38,22 @@ class Blockchain:
         for block in self.chain:
             print(block.data)
         print()
+
+    def to_json(self):
+        """
+        Serialize the blockchain into a list of blocks.
+        """
+        return [block.to_json() for block in self.chain]
+
+    @staticmethod
+    def from_json(chain_json):
+        """
+        Deserialize a list of serialized blocks into a Blockchain instance.
+        The result will contain a chain list of Block instances.
+        """
+        blockchain = Blockchain()
+        blockchain.chain = [Block.from_json(block) for block in chain_json]
+        return blockchain
 
     @staticmethod
     def is_valid_chain(chain):
